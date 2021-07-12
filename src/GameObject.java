@@ -19,9 +19,9 @@ public class GameObject {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.health = health;
 		this.damage = damage;
 		this.maxHealth = health;
+		this.health = health;
 		collisionBox = new Rectangle((int)x, (int)y, width, height);
 	}
 
@@ -41,5 +41,7 @@ public class GameObject {
 		g.setColor(Color.green);
 		double healthPercent = (double)health / (double)maxHealth;
 		g.fillRect((int)x, (int)y - 30, (int)(width * healthPercent), 20);
+		g.setColor(Color.black);
+		g.drawString("   " + health, (int)x, (int)y - 12);
 	}
 }

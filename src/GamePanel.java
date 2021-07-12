@@ -85,7 +85,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 		}
 		if (e.getKeyCode() == 32) {
-			objectManager.addEnemy(100, 100);
+			objectManager.startWave();
 		}
 	}
 
