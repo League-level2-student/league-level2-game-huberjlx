@@ -19,14 +19,14 @@ public class Projectile extends GameObject{
 		vY = slopeY / 50.0;
 		this.isMagicDamage = isMagicDamage;
 	}
-	
+
 	public void draw(Graphics g) {
 		g.setColor(Color.black);
 		g.fillOval((int)x, (int)y, width, height);
 		//g.setColor(Color.ORANGE);
 		//g.drawLine((int)targetX, (int)targetY, (int)startingX, (int)startingY);
 	}
-	
+
 	public void update() {
 		super.update();
 		calculateMovement();
@@ -42,5 +42,5 @@ public class Projectile extends GameObject{
 //		x += (speed/dist) * vX;
 //		y += (speed/dist) * vX;
 	}
-	
+
 }

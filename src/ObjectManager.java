@@ -13,16 +13,23 @@ import javax.swing.Timer;
 public class ObjectManager implements ActionListener {
 	Random rand = new Random();
 	Timer enemySpawn;
-	
+
 	static int money = 999999999;
 	int towerCost = 125;
 	int spawnCounter = 0;
 	int spawnFrequency = 500;
 	int waveNum = 6;
+	int money = 450;
+	int towerCost = 250;
+	int spawnCounter = 0;
+	int spawnFrequency = 500;
+	int enemyCounter = 0;
+	int waveNum = 0;
+
 	boolean inWave = false;
 	long waveStart;
 	long waveLength;
-	
+
 	static Tower selectedTower;
 	static ArrayList <Tower> towers = new ArrayList <Tower>();
 	static ArrayList <Enemy> enemies = new ArrayList <Enemy>();
@@ -30,7 +37,7 @@ public class ObjectManager implements ActionListener {
 	static ArrayList <EnemySpawn> enemySpawns = new ArrayList <EnemySpawn>();
 	static Tile[][] grid = new Tile[39][22];
 	public static Goal goal = new Goal(600, 200, 45, 45, 200, 0);
-	
+
 	ObjectManager() {
 		EnemySpawn spawn = new EnemySpawn(50, 50, 45, 45);
 		enemySpawns.add(spawn);
@@ -43,40 +50,41 @@ public class ObjectManager implements ActionListener {
 			}
 		}
 	}
-	
+
 	public void addTower(int x, int y) {
 		x = (x - 7) / 50;
 		y = (y - 31) / 50;
 		x = x * 50;
 		y = y * 50;
-		
+
 		if (money >= towerCost && inWave == false && enemies.size() == 0) {
+			if (isClearLocation(x, y, 50, 50) == true && money >= towerCost && inWave == false && enemyCounter == 0) {
 			Tower tower = new BasicTower(x, y, 45, 45);
 			towers.add(tower);
 			money -= towerCost;
 			Tile tile = findLocation(x, y);
 			tile.setGameObject(tower);
-			tile.setIsOccupied(true);	
-			
+			tile.setIsOccupied(true);
+
 		}
 	}
-	
+
 	public void addEnemy() {
 		if (spawnCounter > spawnFrequency) {
 			int location = rand.nextInt(enemySpawns.size());
 			EnemySpawn spawn = enemySpawns.get(location);
-			if (isClearLocation((int)spawn.x, (int)spawn.y) == true) {
+			if (isClearLocation((int)spawn.x, (int)spawn.y, 50, 50) == true) {
 				Enemy enemy;
-				if (waveNum <= 6) {
+				if (waveNum <= 5) {
 					int enemyType = rand.nextInt(waveNum);
-					if (enemyType == 0) enemy = new BasicEnemy(spawn.x, spawn.y, 45, 45);	
+					if (enemyType == 0) enemy = new BasicEnemy(spawn.x, spawn.y, 45, 45);
 					else if (enemyType == 2 || enemyType == 3) enemy = new LessBasicEnemy(spawn.x, spawn.y, 45, 45, waveNum);
 					else enemy = new EvenLessBasicEnemy(spawn.x, spawn.y, 45, 45, waveNum);
 				}
 				else {
 					int enemyType = rand.nextInt(9);
 					if (enemyType == 0 || enemyType == 1) enemy = new BasicEnemy(spawn.x, spawn.y, 45, 45);
-					else if (enemyType >= 2 && enemyType <= 5) enemy = new LessBasicEnemy(spawn.x, spawn.y, 45, 45, waveNum);	
+					else if (enemyType >= 2 && enemyType <= 5) enemy = new LessBasicEnemy(spawn.x, spawn.y, 45, 45, waveNum);
 					else if (enemyType == 6 || enemyType == 7) enemy = new EvenLessBasicEnemy(spawn.x, spawn.y, 45, 45, waveNum);
 					else enemy = new Enemy_Spawning_Enemy(spawn.x, spawn.y, 45, 45, waveNum);
 					enemy = new Enemy_Spawning_Enemy(spawn.x, spawn.y, 45, 45, waveNum);
@@ -87,11 +95,11 @@ public class ObjectManager implements ActionListener {
 		}
 		spawnCounter += 20 + (int)(10 * (0.1 * waveNum - 1)); // Increase this number to increase wave spawn frequency. Decrease this value to decrease spawn frequency.
 	}
-	
+
 	public static void addProjectile(Projectile projectile) {
 		projectiles.add(projectile);
 	}
-	
+
 	public void draw(Graphics g) {
 		goal.draw(g);
 		for (Tower tower : towers) {
@@ -104,18 +112,18 @@ public class ObjectManager implements ActionListener {
 			projectile.draw(g);
 		}
 		for (EnemySpawn spawn : enemySpawns) {
-			spawn.draw(g);  
+			spawn.draw(g);
 		}
 		g.drawString("Money: " + money, 30, 30);
 		if (inWave) g.drawString("Wave: " + waveNum, 40, 40);
 		if (selectedTower != null) {
-			showMenu(g); 
+			showMenu(g);
 			selectedTower.drawRange(g);
 		}
-		
-		
+
+
 	}
-	
+
 	public void update() {
 		for (Enemy enemy : enemies) {
 			enemy.update();
@@ -130,7 +138,7 @@ public class ObjectManager implements ActionListener {
 		checkAllCollisions();
 		removeObjects();
 	}
-	
+
 	public static void showMenu(Graphics g) {
 		g.setColor(Color.magenta);
 		g.fillRect(0, TowerDefense.HEIGHT - 210, TowerDefense.WIDTH, 210);
@@ -145,7 +153,7 @@ public class ObjectManager implements ActionListener {
 			selectedTower.statButton1.draw(g);
 			selectedTower.statButton2.draw(g);
 			selectedTower.statButton3.draw(g);
-			if (selectedTower.classButton != null) { 
+			if (selectedTower.classButton != null) {
 				selectedTower.classButton.draw(g);
 			}
 		}
@@ -160,23 +168,23 @@ public class ObjectManager implements ActionListener {
 				selectedTower.statsButton.draw(g);
 			}
 		}
-		
+
 	}
-	
+
 	public static int round(double value) {
 		value = (int)(value / 50);
 		value = value * 50;
 		return (int)value;
-		
+
 	}
-	
+
 	public static boolean isClearLocation(int x, int y) {
 		x = round(x);
 		y = round(y);
 		Tile tile = findLocation(x, y);
 		return !tile.getIsOccupied();
 	}
-	
+
 	public static Tower getTowerAt(int x, int y) {
 		x = (x - 7) / 50;
 		y = (y - 31) / 50;
@@ -189,9 +197,9 @@ public class ObjectManager implements ActionListener {
 			}
 		}
 		return null;
-		
+
 	}
-	
+
 	public void checkAllCollisions() {
 		for (int i = 0; i < enemies.size(); i++) {
 			if (enemies.get(i) != null)  {
@@ -216,6 +224,7 @@ public class ObjectManager implements ActionListener {
 		}
 	}
 	
+
 	public void removeObjects() {
 		if (goal.isAlive == false) {
 			GamePanel.currentState = GamePanel.END;
@@ -227,6 +236,7 @@ public class ObjectManager implements ActionListener {
 				}
 				enemies.get(i).onDeath();
 				enemies.remove(i);
+				enemyCounter -= 1;
 			}
 		}
 		for (int i = 0; i < towers.size(); i++) {
@@ -240,7 +250,7 @@ public class ObjectManager implements ActionListener {
 			}
 		}
 	}
-	
+
 	//Possibly very broken
 	public static Tile findLocation(double x, double y) {
 		x = round(x);
@@ -254,13 +264,13 @@ public class ObjectManager implements ActionListener {
 		}
 		return null;
 	}
-	
+
 	public static ArrayList<Tile> findPath(Tile start, Tile end) {
-		
+
 		HashMap <Tile, Tile> cameFrom = new HashMap <Tile, Tile>();
 		HashMap <Tile, Integer> costs = new HashMap <Tile, Integer>();
 		PriorityQueue <Tile> frontier = new PriorityQueue <Tile>();
-		
+
 		frontier.add(start);
 		cameFrom.put(start, null);
 		costs.put(start, 0);
@@ -281,37 +291,37 @@ public class ObjectManager implements ActionListener {
 			}
 		}
 		return fillPath(start, end, cameFrom);
-		
+
 	}
-	
+
 	public static ArrayList<Tile> fillPath(Tile start, Tile end, HashMap<Tile, Tile> cameFrom) {
 		Tile current = end;
 		ArrayList<Tile> path = new ArrayList<Tile>();
-		
+
 		while (current != start) {
 			path.add(current);
 			current = cameFrom.get(current);
 		}
-		
-		
+
+
 		ArrayList<Tile> reversePath = new ArrayList<Tile>();
 		for (int i = path.size() - 1; i >= 0; i--) {
 			reversePath.add(path.get(i));
 		}
-		
-		
+
+
 		return reversePath;
-		
+
 	}
-	
+
 	public static int cost(Tile a) {
 		return a.cost;
 	}
-	
+
 	public static int heuristic(Tile a, Tile b) {
 		return (int) (Math.abs(a.x - b.x) + Math.abs(a.y - b.y));
 	}
-	
+
 	public static ArrayList<Tile> getNeighborsOf(Tile tile) {
 		ArrayList<Tile> neighbors = tile.getNeighbors();
 		if (neighbors == null) {
@@ -320,8 +330,8 @@ public class ObjectManager implements ActionListener {
 			Tile south = findLocation(tile.x, tile.y - 50);
 			Tile east = findLocation(tile.x + 50, tile.y);
 			Tile west = findLocation(tile.x - 50, tile.y);
-			
-			if (north != null) neighbors.add(north); 
+
+			if (north != null) neighbors.add(north);
 			if (south != null) neighbors.add(south);
 			if (east != null) neighbors.add(east);
 			if (west != null) neighbors.add(west);
@@ -329,7 +339,7 @@ public class ObjectManager implements ActionListener {
 		}
 		return neighbors;
 	}
-	
+
 	public void startWave() {
 		if (inWave == false) {
 			waveNum += 1;
@@ -342,7 +352,7 @@ public class ObjectManager implements ActionListener {
 			}
 		}
 	}
-	
+
 	public void endWave() {
 		enemySpawn.stop();
 		inWave = false;
@@ -352,11 +362,11 @@ public class ObjectManager implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		addEnemy();
-		
+
 	}
-	
+
 	public static double calculateDistance(GameObject a, GameObject b) {
 		return (double) (Math.abs(a.x - b.x) + Math.abs(a.y - b.y));
-		
+
 	}
 }

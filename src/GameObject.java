@@ -15,9 +15,9 @@ public class GameObject {
 	int mr;
 	boolean isAlive = true;
 	boolean spawnsEnemies;
-	
+
 	Rectangle collisionBox;
-	
+
 	public GameObject(double x, double y, int width, int height, int health, int damage, boolean spawnsEnemies, int armor, int mr) {
 		this.x = x;
 		this.y = y;
@@ -34,9 +34,9 @@ public class GameObject {
 
 	public void update() {
 		collisionBox.setBounds((int)x, (int)y, width, height);
-		
+
 	}
-	
+
 	public void takeDamage(int damage, boolean isMagicDamage) {
 		if (isMagicDamage) {
 			double reducedDamage = this.damage / (0.5 * this.mr);
@@ -49,7 +49,7 @@ public class GameObject {
 			isAlive = false;
 		}
 	}
-	
+
 	public void drawHP(Graphics g) {
 		g.setColor(Color.green);
 		double healthPercent = (double)health / (double)maxHealth;
@@ -57,5 +57,5 @@ public class GameObject {
 		g.setColor(Color.black);
 		g.drawString("   " + health, (int)x, (int)y - 12);
 	}
-	
+
 }

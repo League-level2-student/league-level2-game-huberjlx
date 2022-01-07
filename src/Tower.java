@@ -14,11 +14,11 @@ public class Tower extends GameObject {
 	boolean hasAfterWaveAbility = false;
 	boolean hasAbility = false;
 	boolean isMagicDamage;
-	
+
 	static final int STATUPGRADE = 0;
 	static final int CLASSUPGRADE = 1;
 	static int currentUpgrade = STATUPGRADE;
-	
+
 	MenuButton statButton1;
 	MenuButton statButton2;
 	MenuButton statButton3;
@@ -26,7 +26,7 @@ public class Tower extends GameObject {
 	MenuButton option1Button;
 	MenuButton option2Button;
 	MenuButton statsButton;
-	
+
 	Tower(double x, double y, int width, int height, int health, int damage, int attackCD, int range, Color color, String type, boolean isMagicDamage) {
 		super(x, y, width, height, health, damage, false, 0, 0);
 		this.type = type;
@@ -35,10 +35,10 @@ public class Tower extends GameObject {
 		this.color = color;
 		this.armorPiercing = 0;
 		this.isMagicDamage = isMagicDamage;
-		
-		
+
+
 	}
-	
+
 	public void update() {
 		findTarget();
 		if (target != null) {
@@ -52,25 +52,25 @@ public class Tower extends GameObject {
 		if (hasInWaveAbility) {
 			inWaveAbility();
 		}
-		
+
 	}
-	
+
 	public void draw(Graphics g) {
 		g.setColor(color);
 		g.fillRect((int)x, (int)y, width, height);
 		//if (target != null) g.drawLine((int)x, (int)y, (int)target.x, (int)target.y);
 	}
-	
+
 	public void drawRange(Graphics g) {
 		int range = (int)(this.range * 1.8);
 		g.drawOval((int)x + (width / 2) - (range / 2), (int)y + (height / 2) - (range / 2), range, range);
 	}
-	
+
 	public void fire() {
 		Projectile projectile = new Projectile(x + width / 2 - 5, y + height / 2 - 5, 10, 10, damage, target, isMagicDamage);
 		ObjectManager.addProjectile(projectile);
 	}
-	
+
 	public double findTarget() {
 		Enemy target = this.target;
 		double closest;
@@ -85,16 +85,16 @@ public class Tower extends GameObject {
 				closest = distance;
 				target = enemy;
 			}
-			
+
 		}
 		this.target = target;
 		return distance;
 	}
-	
+
 	public void showMenu() {
-		
+
 	}
-	
+
 	public void increaseValue1() {
 
 	}
@@ -115,14 +115,14 @@ public class Tower extends GameObject {
 	public void option1Upgrade() {
 	}
 	public void option2Upgrade() {
-		
+
 	}
-	
+
 	public void inWaveAbility() {
-		
+
 	}
-	
+
 	public void startOfWaveAbility() {
-		
+
 	}
 }
