@@ -4,7 +4,7 @@ import java.awt.Graphics;
 public class Goal extends GameObject{
 	
 	public Goal(double x, double y, int width, int height, int health, int damage) {
-		super(x, y, width, height, health, damage);
+		super(x, y, width, height, health + 1000, damage, false, 50, 50);
 		
 	}
 	
@@ -15,3 +15,4 @@ public class Goal extends GameObject{
 	}
 
 }
+

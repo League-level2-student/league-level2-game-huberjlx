@@ -5,8 +5,8 @@ public class TowerDefense {
 		JFrame frame;
 		GamePanel gamePanel;
 		
-		public static final int WIDTH = 500;
-		public static final int HEIGHT = 800;
+		public static final int WIDTH = 1920;
+		public static final int HEIGHT = 1080;
 		
 		public static void main(String[] args) {
 			
@@ -18,6 +18,7 @@ public class TowerDefense {
 			frame.add(gamePanel);
 			frame.addKeyListener(gamePanel);
 			frame.addMouseListener(gamePanel);
+			frame.addMouseMotionListener(gamePanel);
 			frame.setVisible(true);
 			frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
