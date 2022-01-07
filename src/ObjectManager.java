@@ -176,6 +176,7 @@ public class ObjectManager implements ActionListener {
 		Tile tile = findLocation(x, y);
 		return !tile.getIsOccupied();
 	}
+	
 	public static Tower getTowerAt(int x, int y) {
 		x = (x - 7) / 50;
 		y = (y - 31) / 50;
