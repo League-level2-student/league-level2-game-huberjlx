@@ -2,11 +2,8 @@ import java.awt.Color;
 
 public class RifleTower extends Tower {
   String upgradeOption1 = "Sniper Tower";
-  
   String option1Description = "Has infinte range \n Iecreases attack Cooldown to 600 ms";
-  
   String upgradeOption2 = "Infantry Tower";
-  
   String option2Description = "Increases base damage and \n increases attack cooldown to 400 ms";
   
   RifleTower(double x, double y, int width, int height, int health, int damage, int attackCD, int range, Color color) {
