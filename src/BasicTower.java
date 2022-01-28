@@ -7,18 +7,18 @@ public class BasicTower extends Tower {
 
 	BasicTower(double x, double y, int width, int height) {
 		super(x, y, width, height, 300, 3, 0, 0, 300, 250, Color.ORANGE, "Basic Tower", false, false, 0, 0, Color.black);
-		statButton1 = new MenuButton(200, TowerDefense.HEIGHT - 200, 200, 150, "Upgrade", "Damage", 500, "+ 30 damage", 30);
-		statButton2 = new MenuButton(410, TowerDefense.HEIGHT - 200, 200, 150, "Upgrade", "Range", 500, "+ 25 range", 25);
-		statButton3 = new MenuButton(620, TowerDefense.HEIGHT - 200, 200, 150, "Upgrade", "Attack Cooldown", 500, "- 50 ms", 50);
+		statButton1 = new MenuButton(200, TowerDefense.HEIGHT - 200, 200, 150, "Upgrade", "Damage", 50, "+ 3 damage", 3);
+		statButton2 = new MenuButton(410, TowerDefense.HEIGHT - 200, 200, 150, "Upgrade", "Range", 50, "+ 5 range", 5);
+		statButton3 = new MenuButton(620, TowerDefense.HEIGHT - 200, 200, 150, "Upgrade", "Attack Cooldown", 50, "- 5 ms", 5);
 		classButton = new MenuButton(830, TowerDefense.HEIGHT - 200, 200, 150, "Tower Upgrade", "Upgrade Tower", 0, " ", 0);
-		option1Button = new MenuButton(200, TowerDefense.HEIGHT - 200, 200, 150, "Tower Upgrade", upgradeOption1, 2000, option1ButtonDescription, 0);
+		option1Button = new MenuButton(200, TowerDefense.HEIGHT - 200, 200, 150, "Tower Upgrade", upgradeOption1, 750, option1ButtonDescription, 0);
 		statsButton = new MenuButton(410, TowerDefense.HEIGHT - 200, 200, 150, "Upgrade Tower Stats", "upgrade stats", 0, " ", 0);
 		
 	}
 
 	@Override
 	public void increaseValue1() {
-		if (damage < 95) {
+		if (damage < 15) {
 			damage += statButton1.value;
 			ObjectManager.money -= statButton1.cost;
 		}
@@ -26,7 +26,7 @@ public class BasicTower extends Tower {
 
 	@Override
 	public void increaseValue2() {
-		if (range < 400) {
+		if (range < 325) {
 			range += statButton2.value;
 			ObjectManager.money -= statButton2.cost;
 		}
@@ -34,7 +34,7 @@ public class BasicTower extends Tower {
 
 	@Override
 	public void increaseValue3() {
-		if (attackCD > 100) {
+		if (attackCD > 200) {
 			attackCD -= statButton3.value;
 			ObjectManager.money -= statButton3.cost;
 		}
