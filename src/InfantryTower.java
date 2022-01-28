@@ -2,11 +2,8 @@ import java.awt.Color;
 
 public class InfantryTower extends Tower {
   String upgradeOption1 = "Artillery Tower";
-  
   String option1Description = "High Attack CD, High Damage";
-  
   String upgradeOption2 = "Wizard Tower";
-  
   String option2Description = "Does AOE damage with magic damage";
   
   InfantryTower(double x, double y, int width, int height, int health, int damage, int attackCD, int range, Color color) {
