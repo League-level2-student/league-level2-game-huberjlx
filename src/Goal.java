@@ -23,4 +23,5 @@ public class Goal extends GameObject {
     String healthStr = "Base Health: " + this.health;
     g.drawString(healthStr, 960 - this.width / 2, 45);
   }
+
 }

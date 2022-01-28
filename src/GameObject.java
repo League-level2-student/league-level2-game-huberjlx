@@ -17,10 +17,11 @@ public class GameObject {
 	double splashRange;
 	boolean isAlive = true;
 	boolean spawnsEnemies;
-	
+
 	Rectangle collisionBox;
 	
 	public GameObject(double x, double y, int width, int height, int health, int damage, boolean spawnsEnemies, int armor, int mr, double splashDamage, double splashRange) {
+
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -44,7 +45,7 @@ public class GameObject {
 
 	public void update() {
 		collisionBox.setBounds((int)x, (int)y, width, height);
-		
+
 	}
 	
 	  public void takeDamage(int damage, int armorPen, int magicPen, boolean isMagicDamage, boolean isAOE) {
@@ -80,6 +81,7 @@ public class GameObject {
 		    } 
 		  }
 	
+
 	public void drawHP(Graphics g) {
 		g.setColor(Color.green);
 		double healthPercent = (double)health / (double)maxHealth;
@@ -87,5 +89,5 @@ public class GameObject {
 		g.setColor(Color.black);
 		g.drawString("   " + health, (int)x, (int)y - 12);
 	}
-	
+
 }

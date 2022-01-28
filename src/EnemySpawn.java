@@ -11,5 +11,5 @@ public class EnemySpawn extends GameObject{
 		g.setColor(Color.black);
 		g.fillRect((int)x, (int)y, width, height);
 	}
-	
+
 }

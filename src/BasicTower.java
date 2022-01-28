@@ -1,10 +1,10 @@
 import java.awt.Color;
 
 public class BasicTower extends Tower {
-	
+
 	String upgradeOption1 = "Rifle Tower";
 	String option1ButtonDescription = "Has increased range and damage, Increases \n attack Cooldown to 600 ms";
-	
+
 	BasicTower(double x, double y, int width, int height) {
 		super(x, y, width, height, 300, 3, 0, 0, 300, 250, Color.ORANGE, "Basic Tower", false, false, 0, 0, Color.black);
 		statButton1 = new MenuButton(200, TowerDefense.HEIGHT - 200, 200, 150, "Upgrade", "Damage", 500, "+ 30 damage", 30);
@@ -15,7 +15,7 @@ public class BasicTower extends Tower {
 		statsButton = new MenuButton(410, TowerDefense.HEIGHT - 200, 200, 150, "Upgrade Tower Stats", "upgrade stats", 0, " ", 0);
 		
 	}
-	
+
 	@Override
 	public void increaseValue1() {
 		if (damage < 95) {
@@ -23,7 +23,7 @@ public class BasicTower extends Tower {
 			ObjectManager.money -= statButton1.cost;
 		}
 	}
-	
+
 	@Override
 	public void increaseValue2() {
 		if (range < 400) {
@@ -31,7 +31,7 @@ public class BasicTower extends Tower {
 			ObjectManager.money -= statButton2.cost;
 		}
 	}
-	
+
 	@Override
 	public void increaseValue3() {
 		if (attackCD > 100) {
@@ -40,7 +40,7 @@ public class BasicTower extends Tower {
 		}
 
 	}
-	
+
 	@Override
 	public void option1Upgrade() {
 		//System.out.println("Turning into option 1 tower");

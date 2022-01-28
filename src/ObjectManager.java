@@ -276,30 +276,34 @@ public class ObjectManager implements ActionListener {
     return null;
   }
   
-  public static ArrayList<Tile> findPath(Tile start, Tile end) {
-    HashMap<Tile, Tile> cameFrom = new HashMap<>();
-    HashMap<Tile, Integer> costs = new HashMap<>();
-    PriorityQueue<Tile> frontier = new PriorityQueue<>();
-    frontier.add(start);
-    cameFrom.put(start, null);
-    costs.put(start, Integer.valueOf(0));
-    while (frontier.size() > 0) {
-      Tile current = frontier.remove();
-      if (current == end)
-        break; 
-      for (Tile next : getNeighborsOf(current)) {
-        int newCost = ((Integer)costs.get(current)).intValue() + cost(next);
-        if (!costs.containsKey(next) || newCost < ((Integer)costs.get(next)).intValue()) {
-          frontier.add(next);
-          costs.put(next, Integer.valueOf(newCost));
-          int priority = newCost + heuristic(end, next);
-          next.priority = priority;
-          cameFrom.put(next, current);
-        } 
-      } 
-    } 
-    return fillPath(start, end, cameFrom);
-  }
+	public static ArrayList<Tile> findPath(Tile start, Tile end) {
+
+		HashMap <Tile, Tile> cameFrom = new HashMap <Tile, Tile>();
+		HashMap <Tile, Integer> costs = new HashMap <Tile, Integer>();
+		PriorityQueue <Tile> frontier = new PriorityQueue <Tile>();
+
+		frontier.add(start);
+		cameFrom.put(start, null);
+		costs.put(start, 0);
+		while (frontier.size() > 0) {
+			Tile current = frontier.remove();
+			if (current == end) {
+				break;
+			}
+			for (Tile next : getNeighborsOf(current)) {
+				int newCost = costs.get(current) + cost(next);
+				if (!costs.containsKey(next) || newCost < costs.get(next)) {
+					frontier.add(next);
+					costs.put(next, newCost);
+					int priority = newCost + heuristic(end, next);
+					next.priority = priority;
+					cameFrom.put(next, current);
+				}
+			}
+		}
+		return fillPath(start, end, cameFrom);
+
+	}
   
   public static ArrayList<Tile> fillPath(Tile start, Tile end, HashMap<Tile, Tile> cameFrom) {
     Tile current = end;
@@ -367,4 +371,6 @@ public class ObjectManager implements ActionListener {
   public static double calculateDistance(GameObject a, GameObject b) {
     return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
   }
+
+	
 }

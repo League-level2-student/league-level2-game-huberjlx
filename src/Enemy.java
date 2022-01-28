@@ -13,7 +13,7 @@ public class Enemy extends GameObject {
 	boolean reachedGoal = false;
 	int armor;
 	int mr;
-	
+
 	public Enemy(double x, double y, int width, int height, int health, int damage, int worth, int speed, int multiplier, boolean spawnsEnemies, int armor, int mr) {
 		super(x, y, width, height, health, damage, spawnsEnemies, armor, mr, 0, 0);
 		this.damage = damage + (int)(damage * (0.021 * multiplier));
@@ -34,8 +34,8 @@ public class Enemy extends GameObject {
 		g.setColor(Color.black);
 		//g.drawString("" + (int)distance, (int)x, (int)y + 25);
 	}
-	
-	
+
+
 	public void update() {
 		super.update();
 	    if (this.path.size() > 0) {
@@ -52,9 +52,10 @@ public class Enemy extends GameObject {
 	        if (goalX == this.x && goalY == this.y)
 	          this.path.remove(0); 
 	      } 
+
 	}
 	public void onDeath() {
-		
+
 	}
-	
+
 }
