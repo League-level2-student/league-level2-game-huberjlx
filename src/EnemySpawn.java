@@ -4,7 +4,7 @@ import java.awt.Graphics;
 public class EnemySpawn extends GameObject{
 
 	public EnemySpawn(double x, double y, int width, int height) {
-		super(x, y, width, height, 0, 0, false, 0, 0);
+		super(x, y, width, height, 0, 0, false, 0, 0, 0, 0);
 		
 	}
 	public void draw(Graphics g) {

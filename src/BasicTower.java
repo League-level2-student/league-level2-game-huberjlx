@@ -4,18 +4,15 @@ public class BasicTower extends Tower {
 	
 	String upgradeOption1 = "Rifle Tower";
 	String option1ButtonDescription = "Has increased range and damage, Increases \n attack Cooldown to 600 ms";
-	String upgradeOption2Button = "Anti-Tank Tower";
-	String option2ButtonDescription = "Does 2% more damage to \n enemies with more than 1000 hp";
 	
 	BasicTower(double x, double y, int width, int height) {
-		super(x, y, width, height, 300, 15, 300, 250, Color.green, "Basic Tower", false);
+		super(x, y, width, height, 300, 3, 0, 0, 300, 250, Color.ORANGE, "Basic Tower", false, false, 0, 0, Color.black);
 		statButton1 = new MenuButton(200, TowerDefense.HEIGHT - 200, 200, 150, "Upgrade", "Damage", 500, "+ 30 damage", 30);
 		statButton2 = new MenuButton(410, TowerDefense.HEIGHT - 200, 200, 150, "Upgrade", "Range", 500, "+ 25 range", 25);
 		statButton3 = new MenuButton(620, TowerDefense.HEIGHT - 200, 200, 150, "Upgrade", "Attack Cooldown", 500, "- 50 ms", 50);
 		classButton = new MenuButton(830, TowerDefense.HEIGHT - 200, 200, 150, "Tower Upgrade", "Upgrade Tower", 0, " ", 0);
 		option1Button = new MenuButton(200, TowerDefense.HEIGHT - 200, 200, 150, "Tower Upgrade", upgradeOption1, 2000, option1ButtonDescription, 0);
-		option2Button = new MenuButton(410, TowerDefense.HEIGHT - 200, 200, 150, "Tower Upgrade", upgradeOption2Button, 2000, option2ButtonDescription, 0);
-		statsButton = new MenuButton(620, TowerDefense.HEIGHT - 200, 200, 150, "Upgrade Tower Stats", "upgrade stats", 0, " ", 0);
+		statsButton = new MenuButton(410, TowerDefense.HEIGHT - 200, 200, 150, "Upgrade Tower Stats", "upgrade stats", 0, " ", 0);
 		
 	}
 	
@@ -49,14 +46,9 @@ public class BasicTower extends Tower {
 		//System.out.println("Turning into option 1 tower");
 		ObjectManager.money -= option1Button.cost;
 		isAlive = false;
-		Tower tower = new RifleTower(x, y, width, height, health, 50, 600, 9999, color.WHITE);
+		Tower tower = new RifleTower(x, y, width, height, health, 25, 500, 350, color.WHITE);
 		ObjectManager.towers.add(tower);
 		ObjectManager.selectedTower = tower;
-	}
-	
-	@Override
-	public void option2Upgrade() {
-		
 	}
 
 }

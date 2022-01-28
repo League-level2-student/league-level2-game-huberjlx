@@ -1,62 +1,59 @@
 import java.awt.Color;
 
 public class InfantryTower extends Tower {
-	String upgradeOption1 = "Artillery Tower";
-	String option1Description = "High Attack CD, High Damage";
-	String upgradeOption2 = "Tank Tower";
-	String option2Description = "Does AOE damage with minor armor piercing";
-
-	InfantryTower(double x, double y, int width, int height, int health, int damage, int attackCD, int range,
-			Color color) {
-		super(x, y, width, height, health, damage, attackCD, range, color, "Infantry Tower", false);
-		statButton1 = new MenuButton(200, TowerDefense.HEIGHT - 200, 200, 150, "Upgrade", "Damage", 400, "+ 20 damage", 20);
-		statButton2 = new MenuButton(410, TowerDefense.HEIGHT - 200, 200, 150, "Upgrade", "range", 250, "+ 25 range", 25);
-		statButton3 = new MenuButton(620, TowerDefense.HEIGHT - 200, 200, 150, "Upgrade", "Attack Cooldown", 500, "- 10 ms", 10);
-		classButton = new MenuButton(830, TowerDefense.HEIGHT - 200, 200, 150, "Tower Upgrade", "Upgrade Tower", 0, " ", 0);
-		option1Button = new MenuButton(200, TowerDefense.HEIGHT - 200, 200, 150, "Tower Upgrade", upgradeOption1, 10000, option1Description, 0);
-		option2Button = new MenuButton(410, TowerDefense.HEIGHT - 200, 200, 150, "Tower Upgrade", upgradeOption2, 10000, option2Description, 0);
-		statsButton = new MenuButton(620, TowerDefense.HEIGHT - 200, 200, 150, "Upgrade Tower Stats", "upgrade stats", 0, " ", 0);
-	}
-	
-	@Override
-	public void increaseValue1() {
-		if (damage < 600) {
-			damage += statButton1.value;
-			ObjectManager.money -= statButton1.cost;
-		}
-	}
-	
-	@Override
-	public void increaseValue2() {
-		if (range <= 600) {
-			range += statButton2.value;
-			ObjectManager.money -= statButton2.cost;
-		}
-	}
-	
-	@Override
-	public void increaseValue3() {
-		if (attackCD >= 550) {
-			attackCD -= statButton3.value;
-			ObjectManager.money -= statButton3.cost;
-		}
-	}
-	
-	@Override
-	public void option1Upgrade() {
-		ObjectManager.money -= option1Button.cost;
-		isAlive = false;
-		//Tower tower = new ArtilleryTower(x, y, width, height, health, 50, 600, 9999, color.WHITE);
-		//ObjectManager.towers.add(tower);
-		//ObjectManager.selectedTower = tower;
-	}
-	
-	@Override
-	public void option2Upgrade() {
-		ObjectManager.money -= option1Button.cost;
-		isAlive = false;
-		// Tower tower = new TankTower(x, y, width, height, health, 50, 400, 500, color.WHITE);
-		//ObjectManager.towers.add(tower);
-		//ObjectManager.selectedTower = tower;
-	}
+  String upgradeOption1 = "Artillery Tower";
+  
+  String option1Description = "High Attack CD, High Damage";
+  
+  String upgradeOption2 = "Wizard Tower";
+  
+  String option2Description = "Does AOE damage with magic damage";
+  
+  InfantryTower(double x, double y, int width, int height, int health, int damage, int attackCD, int range, Color color) {
+    super(x, y, width, height, health, damage, 0, 0, attackCD, range, color, "Infantry Tower", false, false, 0.0D, 0.0D, Color.black);
+    this.statButton1 = new MenuButton(200.0D, 880.0D, 200, 150, "Upgrade", "Damage", 200, "+ 5 damage", 5);
+    this.statButton2 = new MenuButton(410.0D, 880.0D, 200, 150, "Upgrade", "range", 150, "+ 10 range", 10);
+    this.statButton3 = new MenuButton(620.0D, 880.0D, 200, 150, "Upgrade", "Attack Cooldown", 200, "- 10 ms", 10);
+    this.classButton = new MenuButton(830.0D, 880.0D, 200, 150, "Tower Upgrade", "Upgrade Tower", 0, " ", 0);
+    this.option1Button = new MenuButton(200.0D, 880.0D, 200, 150, "Tower Upgrade", this.upgradeOption1, 18500, this.option1Description, 0);
+    this.option2Button = new MenuButton(410.0D, 880.0D, 200, 150, "Tower Upgrade", this.upgradeOption2, 15000, this.option2Description, 0);
+    this.statsButton = new MenuButton(620.0D, 880.0D, 200, 150, "Upgrade Tower Stats", "upgrade stats", 0, " ", 0);
+  }
+  
+  public void increaseValue1() {
+    if (this.damage < 150) {
+      this.damage += this.statButton1.value;
+      ObjectManager.money -= this.statButton1.cost;
+    } 
+  }
+  
+  public void increaseValue2() {
+    if (this.range <= 600) {
+      this.range += this.statButton2.value;
+      ObjectManager.money -= this.statButton2.cost;
+    } 
+  }
+  
+  public void increaseValue3() {
+    if (this.attackCD >= 450L) {
+      this.attackCD -= this.statButton3.value;
+      ObjectManager.money -= this.statButton3.cost;
+    } 
+  }
+  
+  public void option1Upgrade() {
+    ObjectManager.money -= this.option1Button.cost;
+    this.isAlive = false;
+    Tower tower = new ArtilleryTower(this.x, this.y, this.width, this.height, this.health, 1000, 4500, 600, new Color(91, 130, 101));
+    ObjectManager.towers.add(tower);
+    ObjectManager.selectedTower = tower;
+  }
+  
+  public void option2Upgrade() {
+    ObjectManager.money -= this.option2Button.cost;
+    this.isAlive = false;
+    Tower tower = new WizardTower(this.x, this.y, this.width, this.height, this.health, 60, 400, 500, Color.cyan, (this.damage / 2), 100.0D);
+    ObjectManager.towers.add(tower);
+    ObjectManager.selectedTower = tower;
+  }
 }
