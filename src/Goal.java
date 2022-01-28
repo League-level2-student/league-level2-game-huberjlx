@@ -15,7 +15,7 @@ public class Goal extends GameObject {
   @Override
   public void drawHP(Graphics g) {
     g.setColor(Color.green);
-    double healthPercent = this.health / this.maxHealth;
+    double healthPercent = (double)this.health / (double)this.maxHealth;
     int rectWidth = (int)((this.width * 3) * healthPercent);
     int rectHeight = 60;
     g.fillRect(960 - this.width / 2, 10, rectWidth, rectHeight);
