@@ -15,7 +15,7 @@ public class Enemy extends GameObject {
 	int mr;
 
 	public Enemy(double x, double y, int width, int height, int health, int damage, int worth, int speed, int multiplier, boolean spawnsEnemies, int armor, int mr) {
-		super(x, y, width, height, health, damage, spawnsEnemies, armor, mr);
+		super(x, y, width, height, health, damage, spawnsEnemies, armor, mr, 0, 0);
 		this.damage = damage + (int)(damage * (0.021 * multiplier));
 		this.health = health + (int)(health * (0.015 * multiplier));
 		this.maxHealth = this.health;
@@ -38,28 +38,21 @@ public class Enemy extends GameObject {
 
 	public void update() {
 		super.update();
-		if (path.size() > 0) {
-			double goalX = path.get(0).x;
-			double goalY = path.get(0).y;
+	    if (this.path.size() > 0) {
+	        double goalX = ((Tile)this.path.get(0)).x;
+	        double goalY = ((Tile)this.path.get(0)).y;
+	        if (this.x < goalX)
+	          this.x += this.speed; 
+	        if (this.y < goalY)
+	          this.y += this.speed; 
+	        if (this.x > goalX)
+	          this.x -= this.speed; 
+	        if (this.y > goalY)
+	          this.y -= this.speed; 
+	        if (goalX == this.x && goalY == this.y)
+	          this.path.remove(0); 
+	      } 
 
-			if (x < goalX) {
-				x = x + speed;
-			}
-			if (y < goalY) {
-				y = y + speed;
-			}
-			if (x > goalX) {
-				x = x - speed;
-			}
-			if (y > goalY) {
-				y = y - speed;
-			}
-
-			if (goalX == x && goalY == y) {
-				path.remove(0);
-			}
-
-		}
 	}
 	public void onDeath() {
 

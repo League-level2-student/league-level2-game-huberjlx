@@ -13,12 +13,15 @@ public class GameObject {
 	int maxHealth;
 	int armor;
 	int mr;
+	int splashDamage;
+	double splashRange;
 	boolean isAlive = true;
 	boolean spawnsEnemies;
 
 	Rectangle collisionBox;
+	
+	public GameObject(double x, double y, int width, int height, int health, int damage, boolean spawnsEnemies, int armor, int mr, double splashDamage, double splashRange) {
 
-	public GameObject(double x, double y, int width, int height, int health, int damage, boolean spawnsEnemies, int armor, int mr) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -27,8 +30,16 @@ public class GameObject {
 		this.maxHealth = health;
 		this.health = health;
 		this.spawnsEnemies = spawnsEnemies;
+		if (armor >= 299) {
+			armor = 299;
+		}
 		this.armor = armor;
+		if (mr >= 299) {
+			mr = 299;
+		}
 		this.mr = mr;
+		this.splashDamage = (int)splashDamage;
+		this.splashRange = splashRange;
 		collisionBox = new Rectangle((int)x, (int)y, width, height);
 	}
 
@@ -36,19 +47,40 @@ public class GameObject {
 		collisionBox.setBounds((int)x, (int)y, width, height);
 
 	}
-
-	public void takeDamage(int damage, boolean isMagicDamage) {
-		if (isMagicDamage) {
-			double reducedDamage = this.damage / (0.5 * this.mr);
-		}
-		else {
-			double reducedDamage = this.damage / (0.5 * this.armor);
-		}
-		this.health -= damage;
-		if (this.health <= 1) {
-			isAlive = false;
-		}
-	}
+	
+	  public void takeDamage(int damage, int armorPen, int magicPen, boolean isMagicDamage, boolean isAOE) {
+		    if (isAOE) {
+		      double reducedDamage;
+		      if (isMagicDamage) {
+		        reducedDamage = (damage - (this.mr - magicPen) / 300 * damage);
+		      } else {
+		        reducedDamage = (damage - (this.armor - armorPen) / 300 * damage);
+		      } 
+		      this.health = (int)(this.health - reducedDamage);
+		      if (this.health <= 1) {
+		        this.isAlive = false;
+		        ObjectManager.score++;
+		      } 
+		      for (Enemy enemy : ObjectManager.enemies) {
+		        double distance = ObjectManager.calculateDistance(enemy, this);
+		        if (distance < this.splashRange)
+		          enemy.takeDamage(this.splashDamage, armorPen, magicPen, isMagicDamage, false); 
+		      } 
+		    } else {
+		      double reducedDamage;
+		      if (isMagicDamage) {
+		        reducedDamage = (damage - (this.mr - magicPen) / 300 * damage);
+		      } else {
+		        reducedDamage = (damage - (this.armor - armorPen) / 300 * damage);
+		      } 
+		      this.health = (int)(this.health - reducedDamage);
+		      if (this.health <= 1) {
+		        this.isAlive = false;
+		        ObjectManager.score++;
+		      } 
+		    } 
+		  }
+	
 
 	public void drawHP(Graphics g) {
 		g.setColor(Color.green);
